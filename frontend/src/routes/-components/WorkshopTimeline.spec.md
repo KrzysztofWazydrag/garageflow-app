@@ -38,6 +38,30 @@ Show the intended main GarageFlow screen as a static workshop schedule prototype
   - Print day sheet
 - Action buttons are visible but not wired to real functionality.
 
+## SPA Header
+
+- The old scaffold header and separate `Home` navigation should be removed.
+- The app should use one real GarageFlow header that feels like a single-page workshop workflow application.
+- The header should show the GarageFlow brand, `Workshop operations` product context and current active section `Workshop Timeline`.
+- A small `Static prototype` badge may be shown to clarify that the current screen is not wired to real functionality.
+- Future navigation labels must not be shown as working unless those sections are implemented.
+
+Acceptance criteria:
+
+- One compact top app bar is visible above the Workshop Timeline screen.
+- The header shows `GarageFlow`, `Workshop operations`, `Workshop Timeline` and `Static prototype`.
+- The old `GarageFlow App` scaffold brand is not shown.
+- The old `Home` nav item is not shown.
+- Header labels are not rendered as fake clickable navigation.
+
+Test checklist:
+
+- Layout renders the GarageFlow header brand.
+- Layout renders `Workshop Timeline` as the active section.
+- Layout does not render the old `Home` navigation item.
+- Workshop Timeline screen still renders.
+- Quick registration search still renders.
+
 ## Static Sample Mechanics
 
 - Dave

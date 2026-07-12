@@ -34,6 +34,7 @@ describe('WorkshopTimeline', () => {
 
     expect(await screen.findByRole('heading', { name: 'Workshop Timeline' })).toBeInTheDocument();
     expect(screen.getByLabelText('Quick registration search')).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Home' })).not.toBeInTheDocument();
   });
 
   test('renders mechanic rows', async () => {

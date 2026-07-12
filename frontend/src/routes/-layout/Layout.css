@@ -1,50 +1,71 @@
+.app {
+  background: #101614;
+  min-height: 100vh;
+}
+
 .app__header {
-  background-color: #16302b;
+  border-bottom: 1px solid #2d423a;
+  background: #121c18;
+  color: #edf3ef;
+}
+
+.app__header-inner {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 1.25rem 1rem;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+.app__brand-group {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.app__brand,
+.app__product-context {
+  margin: 0;
 }
 
 .app__brand {
   color: #ffffff;
   font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.app__product-context {
+  color: #aebcb5;
+  font-size: 0.875rem;
   font-weight: 700;
-  text-decoration: none;
 }
 
-.app__navigation {
-  background-color: #23443d;
-  padding: 0.5rem 1rem;
-}
-
-.app__menu {
-  margin: 0;
-  padding: 0;
+.app__section {
   display: flex;
   align-items: center;
-  justify-content: center;
-  list-style: none;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  text-align: right;
 }
 
-.app__menu-link {
-  display: block;
-  padding: 0.5rem 1rem;
+.app__section-name {
   color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
+  font-weight: 800;
 }
 
-.app__menu-link:focus {
-  outline-color: #9ebeff;
-}
-
-.app__menu-link:hover {
-  color: #9ebeff;
+.app__prototype-badge {
+  border: 1px solid #4f6c61;
+  border-radius: 999px;
+  background: #22332d;
+  color: #d8e5de;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.25rem 0.5rem;
 }
 
 .app__main {
-  padding: 3rem 1rem;
+  background: #101614;
 }
 
 .app__placeholder {
@@ -59,4 +80,17 @@
 .app__placeholder p {
   margin: 0 0 0.75rem;
   line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+  .app__header-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .app__section {
+    justify-content: flex-start;
+    text-align: left;
+  }
 }
