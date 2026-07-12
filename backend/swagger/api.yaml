@@ -1,7 +1,8 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: Boilerplate example API
+  title: GarageFlow App API
+  description: GarageFlow App backend API scaffold.
 servers:
   - url: http://localhost:1337/api
 paths:

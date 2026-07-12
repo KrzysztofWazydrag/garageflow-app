@@ -2,13 +2,13 @@
  <img src=".github/images/react-starter.svg" alt="" />
 </p>
 
-# React Starter Boilerplate
+# GarageFlow App Frontend
 
-A highly scalable and focused on performance and best practices boilerplate code for TypeScript based React SPA applications.
+Frontend scaffold for GarageFlow App, based on the TSH React starter boilerplate.
 
 This project was bootstrapped with [Vite](https://github.com/vitejs/vite) and modified by TSH team.
 
-Start your new React application in seconds!
+GarageFlow domain features have not been implemented yet.
 
 ![GitHub stars](https://img.shields.io/github/stars/TheSoftwareHouse/react-starter-boilerplate?style=social)
 ![GitHub watchers](https://img.shields.io/github/watchers/TheSoftwareHouse/react-starter-boilerplate?style=social)

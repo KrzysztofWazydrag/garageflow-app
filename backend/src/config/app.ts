@@ -9,7 +9,7 @@ export interface AppConfig {
 }
 
 const loadConfig = (env: any): AppConfig => ({
-  appName: env.APP_NAME ?? "boilerplate_api",
+  appName: env.APP_NAME ?? "garageflow-api",
   port: env.PORT ?? "1337",
   env: env.STAGE,
   deployedCommit: env.BITBUCKET_COMMIT,

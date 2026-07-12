@@ -8,11 +8,11 @@
   &emsp;
 </p>
 
-##
+# GarageFlow App Backend
 
-A highly scalable and a focus on performance and best practices boilerplate code for Nodejs and TypeScript based web applications.
+Backend scaffold for GarageFlow App, based on the TSH Express boilerplate.
 
-Start a new application in seconds!
+GarageFlow domain features have not been implemented yet.
 
 ##
 

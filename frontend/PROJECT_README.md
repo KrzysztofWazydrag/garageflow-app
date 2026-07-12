@@ -1,8 +1,8 @@
-# [PROJECT_NAME]
+# GarageFlow App Frontend
 
-[PROJECT_DESCRIPTION]
+Frontend scaffold for GarageFlow App.
 
-This project was bootstrapped with [Vite](https://github.com/vitejs/vite) and modified by TSH team.
+This app uses the TSH React starter scaffold with [Vite](https://github.com/vitejs/vite).
 
 ## Quick Start
 
@@ -59,4 +59,3 @@ Copyright © 2021-present The Software House. This source code is licensed under
 <sup>
 Made with ♥ by The Software House (<a href="https://tsh.io">website</a>, <a href="https://tsh.io/blog">blog</a>)
 </sup>
-

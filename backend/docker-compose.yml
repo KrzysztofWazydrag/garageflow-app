@@ -47,12 +47,12 @@ services:
     networks:
       - app
 
-  boilerplate_api:
+  garageflow_api:
     <<: *common
     working_dir: /app/build
-    container_name: boilerplate_api
+    container_name: garageflow_api
     command: [sh, -c, 'node --watch --inspect=0.0.0.0 -r source-map-support/register ./src/index.js']
-    hostname: boilerplate_api
+    hostname: garageflow_api
     depends_on:
       - postgres
       - redis
