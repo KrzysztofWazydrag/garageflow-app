@@ -1,0 +1,184 @@
+.workshop-timeline {
+  min-height: calc(100vh - 8rem);
+  padding: 2rem;
+  background: #101614;
+  color: #edf3ef;
+}
+
+.workshop-timeline__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 0 auto 2rem;
+  max-width: 76rem;
+}
+
+.workshop-timeline__title {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+}
+
+.workshop-timeline__subtitle {
+  margin: 0;
+  color: #aebcb5;
+}
+
+.workshop-timeline__search {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 18rem;
+}
+
+.workshop-timeline__search label {
+  color: #c8d4ce;
+  font-weight: 700;
+}
+
+.workshop-timeline__search input {
+  border: 1px solid #496158;
+  border-radius: 0.375rem;
+  background: #17211d;
+  color: #ffffff;
+  font: inherit;
+  padding: 0.75rem 0.875rem;
+  text-transform: uppercase;
+}
+
+.workshop-timeline__board {
+  max-width: 76rem;
+  margin: 0 auto;
+  border: 1px solid #2d423a;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  background: #151d1a;
+}
+
+.workshop-timeline__header-row,
+.workshop-timeline__row {
+  display: grid;
+  grid-template-columns: 9rem repeat(18, minmax(3.25rem, 1fr));
+  min-width: 68rem;
+}
+
+.workshop-timeline__corner,
+.workshop-timeline__hour,
+.workshop-timeline__mechanic,
+.workshop-timeline__lane {
+  border-bottom: 1px solid #2d423a;
+}
+
+.workshop-timeline__corner,
+.workshop-timeline__hour {
+  background: #1d2a25;
+  color: #b7c5be;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.75rem;
+}
+
+.workshop-timeline__mechanic {
+  background: #18231f;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 1rem;
+}
+
+.workshop-timeline__lane {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(18, minmax(3.25rem, 1fr));
+  min-height: 7.5rem;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent,
+    transparent calc(5.555% - 1px),
+    #24352f calc(5.555% - 1px),
+    #24352f 5.555%
+  );
+}
+
+.workshop-timeline__job {
+  align-self: center;
+  margin: 0.5rem;
+  border: 1px solid #446156;
+  border-radius: 0.5rem;
+  background: #21342e;
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.22);
+  padding: 0.75rem;
+}
+
+.workshop-timeline__job-registration {
+  margin: 0 0 0.25rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.workshop-timeline__job-title {
+  margin: 0 0 0.5rem;
+  color: #dce7e1;
+  font-weight: 700;
+}
+
+.workshop-timeline__job-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: #aebcb5;
+  font-size: 0.75rem;
+}
+
+.workshop-timeline__status {
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  color: #101614;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.workshop-timeline__status--booked {
+  background: #8cb7ff;
+}
+
+.workshop-timeline__status--checked-in {
+  background: #78dcca;
+}
+
+.workshop-timeline__status--diagnosing {
+  background: #f3c969;
+}
+
+.workshop-timeline__status--waiting-for-parts {
+  background: #f0a15f;
+}
+
+.workshop-timeline__status--in-progress {
+  background: #8fd37f;
+}
+
+.workshop-timeline__status--ready-for-collection {
+  background: #bda3ff;
+}
+
+.workshop-timeline__status--completed {
+  background: #b7c0bc;
+}
+
+@media (max-width: 760px) {
+  .workshop-timeline {
+    padding: 1rem;
+  }
+
+  .workshop-timeline__header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .workshop-timeline__search {
+    min-width: 0;
+  }
+}

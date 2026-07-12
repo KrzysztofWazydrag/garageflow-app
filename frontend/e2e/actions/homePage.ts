@@ -4,8 +4,8 @@ const openHomePage = async (page: Page) => {
   await page.goto('/');
 
   await expect(page).toHaveTitle(/GarageFlow App/);
-  await expect(page.getByRole('heading', { name: 'GarageFlow App' })).toBeVisible();
-  await expect(page.getByText('Scaffold ready. GarageFlow domain features are not implemented yet.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Workshop Timeline' })).toBeVisible();
+  await expect(page.getByLabel('Quick registration search')).toBeVisible();
 };
 
 export const homePageActions = {
