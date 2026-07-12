@@ -5,6 +5,109 @@
   color: #edf3ef;
 }
 
+.workshop-timeline__app-shell {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: 76rem;
+  margin: 0 auto 1.5rem;
+}
+
+.workshop-timeline__app-name {
+  margin: 0 0 0.375rem;
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.workshop-timeline__tagline {
+  margin: 0;
+  color: #aebcb5;
+  font-size: 1rem;
+}
+
+.workshop-timeline__context {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: end;
+  color: #aebcb5;
+}
+
+.workshop-timeline__context-label {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.workshop-timeline__context-copy {
+  max-width: 18rem;
+  text-align: right;
+}
+
+.workshop-timeline__summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  max-width: 76rem;
+  margin: 0 auto 1rem;
+}
+
+.workshop-timeline__summary-metric {
+  border: 1px solid #2d423a;
+  border-radius: 0.5rem;
+  background: #17211d;
+  padding: 1rem;
+}
+
+.workshop-timeline__summary-value {
+  display: block;
+  margin: 0 0 0.25rem;
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.workshop-timeline__summary-label {
+  color: #aebcb5;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.workshop-timeline__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  max-width: 76rem;
+  margin: 0 auto 2rem;
+}
+
+.workshop-timeline__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #4f6c61;
+  border-radius: 0.375rem;
+  background: #22332d;
+  color: #d8e5de;
+  font: inherit;
+  font-weight: 800;
+  padding: 0.75rem 1rem;
+}
+
+.workshop-timeline__action:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.workshop-timeline__action-note {
+  border-radius: 999px;
+  background: #3a4f47;
+  color: #d8e5de;
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.375rem;
+}
+
 .workshop-timeline__header {
   display: flex;
   align-items: flex-end;
@@ -173,9 +276,26 @@
     padding: 1rem;
   }
 
+  .workshop-timeline__app-shell,
   .workshop-timeline__header {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .workshop-timeline__context {
+    justify-items: start;
+  }
+
+  .workshop-timeline__context-copy {
+    text-align: left;
+  }
+
+  .workshop-timeline__summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workshop-timeline__actions {
+    justify-content: flex-start;
   }
 
   .workshop-timeline__search {

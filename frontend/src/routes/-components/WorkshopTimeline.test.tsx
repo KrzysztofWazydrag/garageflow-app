@@ -3,6 +3,32 @@ import { render, screen } from 'tests';
 import { WorkshopTimeline } from './WorkshopTimeline';
 
 describe('WorkshopTimeline', () => {
+  test('renders the GarageFlow app shell', async () => {
+    render(<WorkshopTimeline />);
+
+    expect(await screen.findByText('GarageFlow')).toBeInTheDocument();
+    expect(screen.getByText('Garage job scheduling without the paper notebook.')).toBeInTheDocument();
+    expect(screen.getByText('Today')).toBeInTheDocument();
+  });
+
+  test('renders workshop summary metrics', async () => {
+    render(<WorkshopTimeline />);
+
+    expect(await screen.findByText("Today's jobs")).toBeInTheDocument();
+    expect(screen.getByText('7')).toBeInTheDocument();
+    expect(screen.getAllByText('In progress').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('1')).toHaveLength(3);
+    expect(screen.getAllByText('Waiting for parts').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Ready for collection').length).toBeGreaterThan(0);
+  });
+
+  test('renders non-functional action buttons', async () => {
+    render(<WorkshopTimeline />);
+
+    expect(await screen.findByRole('button', { name: 'New booking Coming soon' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Print day sheet Coming soon' })).toBeDisabled();
+  });
+
   test('renders heading and registration search', async () => {
     render(<WorkshopTimeline />);
 
@@ -36,8 +62,8 @@ describe('WorkshopTimeline', () => {
     expect(await screen.findByText('Booked')).toBeInTheDocument();
     expect(screen.getByText('Checked in')).toBeInTheDocument();
     expect(screen.getByText('Diagnosing')).toBeInTheDocument();
-    expect(screen.getByText('Waiting for parts')).toBeInTheDocument();
-    expect(screen.getByText('In progress')).toBeInTheDocument();
+    expect(screen.getAllByText('Waiting for parts').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('In progress').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Ready for collection').length).toBeGreaterThan(0);
     expect(screen.getByText('Completed')).toBeInTheDocument();
   });

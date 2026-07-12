@@ -17,6 +17,18 @@ export type TimelineHour = {
   value: number;
 };
 
+export type WorkshopSummaryMetric = {
+  id: string;
+  label: string;
+  value: number;
+};
+
+export type WorkshopAction = {
+  id: string;
+  label: string;
+  isEnabled: boolean;
+};
+
 export type WorkshopTimelineJob = {
   id: string;
   mechanicId: string;

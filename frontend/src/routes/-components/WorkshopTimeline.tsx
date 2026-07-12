@@ -1,6 +1,13 @@
 import './WorkshopTimeline.css';
 
-import { JobStatus, Mechanic, TimelineHour, WorkshopTimelineJob } from './WorkshopTimeline.types';
+import {
+  JobStatus,
+  Mechanic,
+  TimelineHour,
+  WorkshopAction,
+  WorkshopSummaryMetric,
+  WorkshopTimelineJob,
+} from './WorkshopTimeline.types';
 
 const mechanics: Mechanic[] = [
   { id: 'dave', name: 'Dave' },
@@ -87,6 +94,23 @@ const workshopJobs: WorkshopTimelineJob[] = [
   },
 ];
 
+const todayJobCount = 7;
+const inProgressJobCount = 1;
+const waitingForPartsJobCount = 1;
+const readyForCollectionJobCount = 1;
+
+const workshopSummaryMetrics: WorkshopSummaryMetric[] = [
+  { id: 'todays-jobs', label: "Today's jobs", value: todayJobCount },
+  { id: 'in-progress', label: 'In progress', value: inProgressJobCount },
+  { id: 'waiting-for-parts', label: 'Waiting for parts', value: waitingForPartsJobCount },
+  { id: 'ready-for-collection', label: 'Ready for collection', value: readyForCollectionJobCount },
+];
+
+const workshopActions: WorkshopAction[] = [
+  { id: 'new-booking', label: 'New booking', isEnabled: false },
+  { id: 'print-day-sheet', label: 'Print day sheet', isEnabled: false },
+];
+
 const jobStatusLabels: Record<JobStatus, string> = {
   booked: 'Booked',
   'checked-in': 'Checked in',
@@ -140,9 +164,46 @@ const TimelineJobBlock = ({ workshopJob }: { workshopJob: WorkshopTimelineJob })
   );
 };
 
+const SummaryMetric = ({ workshopSummaryMetric }: { workshopSummaryMetric: WorkshopSummaryMetric }) => (
+  <div className="workshop-timeline__summary-metric">
+    <span className="workshop-timeline__summary-value">{workshopSummaryMetric.value}</span>
+    <span className="workshop-timeline__summary-label">{workshopSummaryMetric.label}</span>
+  </div>
+);
+
+const WorkshopActionButton = ({ workshopAction }: { workshopAction: WorkshopAction }) => (
+  <button className="workshop-timeline__action" disabled={!workshopAction.isEnabled} type="button">
+    <span>{workshopAction.label}</span>
+    {!workshopAction.isEnabled && <span className="workshop-timeline__action-note">Coming soon</span>}
+  </button>
+);
+
 export const WorkshopTimeline = () => {
   return (
     <section className="workshop-timeline" aria-labelledby="workshop-timeline-title">
+      <div className="workshop-timeline__app-shell">
+        <div>
+          <p className="workshop-timeline__app-name">GarageFlow</p>
+          <p className="workshop-timeline__tagline">Garage job scheduling without the paper notebook.</p>
+        </div>
+        <div className="workshop-timeline__context">
+          <span className="workshop-timeline__context-label">Today</span>
+          <span className="workshop-timeline__context-copy">Static workshop view. Actions are not connected yet.</span>
+        </div>
+      </div>
+
+      <div className="workshop-timeline__summary">
+        {workshopSummaryMetrics.map((workshopSummaryMetric) => (
+          <SummaryMetric key={workshopSummaryMetric.id} workshopSummaryMetric={workshopSummaryMetric} />
+        ))}
+      </div>
+
+      <div className="workshop-timeline__actions" aria-label="Workshop actions">
+        {workshopActions.map((workshopAction) => (
+          <WorkshopActionButton key={workshopAction.id} workshopAction={workshopAction} />
+        ))}
+      </div>
+
       <div className="workshop-timeline__header">
         <div>
           <h1 className="workshop-timeline__title" id="workshop-timeline-title">
