@@ -23,17 +23,35 @@ GarageFlow App focuses on the practical daily workflow. It is not a full garage 
 3. User creates or finds the vehicle using registration number.
 4. User creates a job or booking.
 5. User assigns the job to a mechanic.
-6. Job moves through the workshop status workflow.
-7. Mechanic adds internal notes.
-8. User adds labour items.
-9. User adds parts items.
-10. App calculates labour subtotal, parts subtotal and job total.
-11. Returning vehicles can be found by registration number with job history.
-12. User prints a simple customer job summary / handover sheet.
+6. Job appears on the workshop timeline for the scheduled day.
+7. Job moves through the workshop status workflow.
+8. Mechanic adds internal notes.
+9. User adds labour items.
+10. User adds parts items.
+11. App calculates labour subtotal, parts subtotal and job total.
+12. Returning vehicles can be found by registration number with job history.
+13. User prints a simple customer job summary / handover sheet.
+
+## Main Interface Direction
+
+GarageFlow App should use a workshop timeline as the main interface, not a plain table or simple Kanban board.
+
+The timeline should be a desktop-first garage/workshop view inspired by scheduling and Gantt-style products:
+
+- Mechanics as rows
+- Time of day as the horizontal axis
+- Jobs and bookings as blocks on the timeline
+- Status badges or colours for the workshop status workflow
+- Quick vehicle registration search above the timeline
+- Clicking a job opens the job detail workflow
+- Jobs can later be moved through workflow statuses
+- Practical, dark, industrial UI style
+
+The main screen should help the garage owner or service advisor quickly understand who is working on what, when vehicles are booked in, what is waiting for parts, and what is ready for collection.
 
 ## MVP Scope
 
-- Dashboard with today's bookings and active jobs
+- Workshop timeline with today's bookings and active jobs
 - Quick vehicle registration search
 - Customer records
 - Vehicle records
@@ -104,4 +122,4 @@ The printable document is a customer job summary / handover sheet, not an invoic
 
 GarageFlow App should be understandable to a recruiter in under two minutes:
 
-> A practical full-stack workflow app that digitises a paper-based garage process using industry-style backend and frontend boilerplates.
+> A practical full-stack workflow app that digitises a paper-based garage process with a workshop timeline, vehicle history, job workflow and printable handover summaries.

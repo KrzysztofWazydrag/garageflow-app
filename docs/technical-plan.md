@@ -61,6 +61,23 @@ Keep the TSH React frontend conventions:
 - Existing API action patterns
 - Existing route and UI structure
 
+## UI Direction
+
+The main GarageFlow interface should be a workshop timeline rather than a plain table or simple Kanban board.
+
+Timeline concept:
+
+- Mechanics as rows
+- Time of day as the horizontal axis
+- Jobs and bookings as timeline blocks
+- Status badges or colours for Booked, Checked in, Diagnosing, Waiting for parts, In progress, Ready for collection and Completed
+- Quick vehicle registration search above the timeline
+- Clicking a job opens the job detail workflow
+- Desktop-first garage/workshop view
+- Practical, dark, industrial UI style
+
+This direction affects the backend model: jobs need scheduling fields that can support a daily timeline, such as scheduled date/time, expected duration or scheduled end time, assigned mechanic and status.
+
 ## Backend Module Plan
 
 Planned backend features:
@@ -119,7 +136,7 @@ frontend/src/
 
 Main screens:
 
-- Dashboard
+- Workshop timeline
 - Jobs list
 - New job
 - Job detail
@@ -131,6 +148,7 @@ Main screens:
 
 ```text
 GET    /api/dashboard
+GET    /api/workshop-timeline?date=2026-07-12
 
 GET    /api/customers
 POST   /api/customers
@@ -180,6 +198,8 @@ Important rules:
 - Vehicle registration is normalized and unique.
 - Job has one customer and one vehicle.
 - Job can have one assigned mechanic.
+- Job should support scheduled start and scheduled end, or scheduled start and expected duration, for the workshop timeline.
+- Job status drives timeline badges and workflow state.
 - Labour and part line totals are calculated by the backend.
 - Job total is calculated from labour and parts.
 - Customer handover summary is not an invoice.
@@ -189,6 +209,7 @@ Important rules:
 Backend API tests:
 
 - Registration search normalization
+- Workshop timeline by date
 - Customer and vehicle creation validation
 - Vehicle history
 - Job creation
@@ -201,13 +222,14 @@ Backend API tests:
 Frontend tests:
 
 - Route rendering
+- Timeline block rendering
 - Status badge rendering
 - Money formatting
 - Registration search form behavior
 
 Playwright E2E tests:
 
-- Dashboard loads seeded active jobs
+- Workshop timeline loads seeded active jobs
 - Registration search opens vehicle history
 - Job detail shows workflow state
 - Mechanic note can be added
@@ -226,7 +248,7 @@ Playwright E2E tests:
 8. `feat: add registration search and vehicle history`
 9. `feat: add job workflow APIs`
 10. `feat: add notes parts labour and totals`
-11. `feat: build dashboard and registration search UI`
+11. `feat: build workshop timeline and registration search UI`
 12. `feat: build job detail workflow UI`
 13. `feat: add printable customer handover summary`
 14. `test: add backend API workflow tests`
