@@ -2,7 +2,6 @@ import { AwilixContainer, asValue } from "awilix";
 import { Logger } from "winston";
 import { ContainerDependencies } from "../container";
 import { dataSource } from "../config/db";
-import { UserEntity } from "../app/features/example/models/user.entity";
 // MODELS_IMPORTS
 
 export async function registerDatabase(container: AwilixContainer, dependencies?: ContainerDependencies) {
@@ -17,7 +16,6 @@ export async function registerDatabase(container: AwilixContainer, dependencies?
   }
   container.register({
     dbDataSource: asValue(dbDataSource),
-    userRepository: asValue(dbDataSource.getRepository(UserEntity)),
     // MODELS_SETUP
   });
 }

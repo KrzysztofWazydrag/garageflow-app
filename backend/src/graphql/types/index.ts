@@ -1,6 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
 export type Maybe<T> = T | null;
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -10,28 +9,15 @@ export type Scalars = {
   Float: number;
 };
 
-export type User = {
-   __typename?: 'User';
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-};
-
 export type Query = {
    __typename?: 'Query';
-  getUsers?: Maybe<Array<Maybe<User>>>;
-  getUser?: Maybe<User>;
+  _empty?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
    __typename?: 'Mutation';
-  deleteUser?: Maybe<Scalars['String']>;
+  _empty?: Maybe<Scalars['String']>;
 };
-
-
-export type MutationDeleteUserArgs = {
-  id?: Maybe<Scalars['String']>;
-};
-
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -107,7 +93,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
-  User: ResolverTypeWrapper<User>,
   Query: ResolverTypeWrapper<{}>,
   Mutation: ResolverTypeWrapper<{}>,
 };
@@ -116,28 +101,19 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   String: Scalars['String'],
   Boolean: Scalars['Boolean'],
-  User: User,
   Query: {},
   Mutation: {},
 };
 
-export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn<ParentType>,
-};
-
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>,
-  getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
+  _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  deleteUser?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteUserArgs, never>>,
+  _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {
-  User?: UserResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
 };
