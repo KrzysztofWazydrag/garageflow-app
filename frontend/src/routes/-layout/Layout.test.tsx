@@ -1,18 +1,14 @@
-import { render, screen, within } from 'tests';
+import { render, screen } from 'tests';
 
 import { Layout } from './Layout';
 
 describe('Layout', () => {
-  test('renders the GarageFlow SPA header', async () => {
+  test('renders the route layout shell without scaffold navigation', async () => {
     render(<Layout />);
 
-    const header = await screen.findByRole('banner', { name: 'GarageFlow workspace' });
-
-    expect(within(header).getByText('GarageFlow')).toBeInTheDocument();
-    expect(within(header).getByText('Workshop operations')).toBeInTheDocument();
-    expect(within(header).getByText('Workshop Timeline')).toBeInTheDocument();
-    expect(within(header).getByText('Static prototype')).toBeInTheDocument();
+    expect(await screen.findByRole('main')).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Home' })).not.toBeInTheDocument();
     expect(screen.queryByText('GarageFlow App')).not.toBeInTheDocument();
+    expect(screen.queryByText('Static prototype')).not.toBeInTheDocument();
   });
 });

@@ -1,11 +1,27 @@
 export type JobStatus =
-  | 'booked'
-  | 'checked-in'
-  | 'diagnosing'
-  | 'waiting-for-parts'
-  | 'in-progress'
-  | 'ready-for-collection'
-  | 'completed';
+  | 'Booked'
+  | 'InWorkshop'
+  | 'WaitingForCustomer'
+  | 'WaitingForParts'
+  | 'ReadyForCollection'
+  | 'Completed'
+  | 'Cancelled';
+
+export type WorkshopCallback =
+  | {
+      status: 'NotRequired';
+    }
+  | {
+      status: 'Required';
+      dueAt: string;
+    }
+  | {
+      status: 'Done';
+      dueAt?: string;
+      completedAt: string;
+    };
+
+export type WorkspaceView = 'Schedule' | 'Customers' | 'Callbacks';
 
 export type Mechanic = {
   id: string;
@@ -23,18 +39,52 @@ export type WorkshopSummaryMetric = {
   value: number;
 };
 
-export type WorkshopAction = {
+export type Customer = {
   id: string;
-  label: string;
-  isEnabled: boolean;
+  fullName: string;
+  phoneNumber: string;
+  registration: string;
+  vehicleDescription: string;
+  lastVisit: string;
 };
 
 export type WorkshopTimelineJob = {
   id: string;
   mechanicId: string;
+  customerId: string;
+  customerName: string;
+  phoneNumber: string;
   registration: string;
+  vehicleDescription: string;
   title: string;
   scheduledStart: string;
   scheduledEnd: string;
   status: JobStatus;
+  callback: WorkshopCallback;
+  notes: string;
+};
+
+export type CallbackQueueItem = {
+  id: string;
+  registration: string;
+  customerName: string;
+  title: string;
+  dueAt?: string;
+  completedAt?: string;
+  status: 'Overdue' | 'DueToday' | 'Done';
+};
+
+export type NewJobFormValues = {
+  customerId?: string;
+  customerName: string;
+  phoneNumber: string;
+  registration: string;
+  vehicleDescription: string;
+  reason: string;
+  mechanicId: string;
+  scheduledStart: string;
+  scheduledEnd: string;
+  status: JobStatus;
+  callbackRequired: boolean;
+  callbackDueTime: string;
 };
