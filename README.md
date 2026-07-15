@@ -103,6 +103,11 @@ Planned security and observability work includes:
 
 ## Local Development
 
+Required runtime:
+
+- Node.js 24.18.0 LTS
+- npm from the selected Node.js release
+
 Root:
 
 ```bash
