@@ -6,7 +6,7 @@ This is a portfolio MVP and work in progress. It is not production software, it 
 
 ## Current Status
 
-GarageFlow currently has a static frontend workshop timeline prototype plus tested backend domain helpers.
+GarageFlow currently has an interactive frontend workshop workspace prototype plus tested backend domain helpers.
 
 Backend APIs and persistence are planned, but not implemented yet.
 
@@ -14,13 +14,14 @@ Backend APIs and persistence are planned, but not implemented yet.
 
 ### Frontend prototype
 
-- Static Workshop Timeline UI
-- Mechanics displayed as rows
-- Time-of-day scheduling
-- Job blocks with vehicle registration, job title, time range and status
-- Quick registration search UI
-- GarageFlow app shell summary
-- SPA-style header
+- Interactive Schedule, Customers and Callbacks workspace navigation
+- Workshop schedule timeline with mechanics as rows and time-of-day job placement
+- Clickable job cards with vehicle registration, customer context, status and callback state
+- Job details drawer with local status workflow actions
+- Callback queue with overdue highlighting and local mark-contacted flow
+- Fast New job drawer using one search for customer name, phone number or vehicle registration
+- Local customer directory and callback directory
+- Derived operational counts from local prototype state
 
 ### Backend foundation
 
