@@ -2,10 +2,9 @@ import { DomainValidationError } from "./domain-validation.error";
 
 export const JOB_STATUSES = [
   "Booked",
-  "CheckedIn",
-  "Diagnosing",
+  "InWorkshop",
+  "WaitingForCustomer",
   "WaitingForParts",
-  "InProgress",
   "ReadyForCollection",
   "Completed",
   "Cancelled",
@@ -14,12 +13,11 @@ export const JOB_STATUSES = [
 export type JobStatus = (typeof JOB_STATUSES)[number];
 
 export const ALLOWED_JOB_STATUS_TRANSITIONS = {
-  Booked: ["CheckedIn", "Cancelled"],
-  CheckedIn: ["Diagnosing", "InProgress", "Cancelled"],
-  Diagnosing: ["WaitingForParts", "InProgress", "Cancelled"],
-  WaitingForParts: ["InProgress", "Cancelled"],
-  InProgress: ["WaitingForParts", "ReadyForCollection", "Cancelled"],
-  ReadyForCollection: ["Completed", "InProgress"],
+  Booked: ["InWorkshop", "Cancelled"],
+  InWorkshop: ["WaitingForCustomer", "WaitingForParts", "ReadyForCollection", "Cancelled"],
+  WaitingForCustomer: ["InWorkshop", "ReadyForCollection", "Cancelled"],
+  WaitingForParts: ["InWorkshop", "ReadyForCollection", "Cancelled"],
+  ReadyForCollection: ["Completed", "InWorkshop"],
   Completed: [],
   Cancelled: [],
 } as const satisfies Record<JobStatus, readonly JobStatus[]>;
