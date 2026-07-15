@@ -23,6 +23,7 @@ garageflow-app/
 ├── backend/
 ├── frontend/
 ├── docs/
+│   ├── adr/
 │   ├── product-plan.md
 │   └── technical-plan.md
 ├── docker-compose.yml
@@ -63,20 +64,21 @@ Keep the TSH React frontend conventions:
 
 ## UI Direction
 
-The main GarageFlow interface should be a workshop timeline rather than a plain table or simple Kanban board.
+The main GarageFlow interface should remain a daily workshop timeline or list rather than a plain admin table.
 
-Timeline concept:
+Timeline/list concept:
 
-- Mechanics as rows
-- Time of day as the horizontal axis
-- Jobs and bookings as timeline blocks
-- Status badges or colours for Booked, Checked in, Diagnosing, Waiting for parts, In progress, Ready for collection and Completed
-- Quick vehicle registration search above the timeline
-- Clicking a job opens the job detail workflow
+- Mechanics or work lanes as rows where useful
+- Time of day as the horizontal axis where useful
+- Jobs and bookings as simple blocks or rows
+- Status badges for Booked, In workshop, Waiting for customer, Waiting for parts, Ready for collection, Completed and Cancelled
+- Callback due/overdue highlighting
+- Quick vehicle registration search
+- Customer search
 - Desktop-first garage/workshop view
 - Practical, dark, industrial UI style
 
-This direction affects the backend model: jobs need scheduling fields that can support a daily timeline, such as scheduled date/time, expected duration or scheduled end time, assigned mechanic and status.
+This direction affects the backend model: workshop jobs need scheduling fields, simple status fields and callback fields.
 
 ## Backend Module Plan
 
@@ -84,11 +86,10 @@ Planned backend features:
 
 ```text
 backend/src/app/features/
-├── dashboard/
 ├── customers/
 ├── vehicles/
 ├── mechanics/
-└── jobs/
+└── workshop-jobs/
 ```
 
 Each feature should follow the existing TSH backend style:
@@ -105,14 +106,18 @@ feature/
 └── routing.ts
 ```
 
-Shared backend utilities:
+Existing shared backend utilities:
 
 ```text
-backend/src/shared/
-├── money/
-├── registration/
-└── workflow/
+backend/src/shared/garage-domain/
+├── domain-validation.error.ts
+├── job-status.ts
+├── money-in-pence.ts
+├── scheduled-time-range.ts
+└── vehicle-registration.ts
 ```
+
+`MoneyInPence` already exists as a small reusable helper. Billing and pricing are no longer MVP scope; this helper can remain for now and be removed later if it stays unused.
 
 ## Frontend Module Plan
 
@@ -124,8 +129,7 @@ frontend/src/
 │   ├── customers/
 │   ├── vehicles/
 │   ├── mechanics/
-│   ├── jobs/
-│   └── dashboard/
+│   └── workshop-jobs/
 ├── routes/
 ├── ui/
 ├── hooks/
@@ -136,23 +140,24 @@ frontend/src/
 
 Main screens:
 
-- Workshop timeline
-- Jobs list
-- New job
-- Job detail
-- Vehicle detail and history
+- Workshop timeline/list
+- New workshop job
+- Workshop job detail
+- Vehicle detail and visit history
 - Customer detail
-- Printable customer handover summary
+- Callback follow-up view
 
 ## API Route Plan
 
+First backend APIs should support simple customers, vehicles, workshop jobs and callbacks:
+
 ```text
-GET    /api/dashboard
 GET    /api/workshop-timeline?date=2026-07-12
 
 GET    /api/customers
 POST   /api/customers
 GET    /api/customers/:id
+GET    /api/customers/search?query=smith
 
 GET    /api/vehicles/search?registration=AB12CDE
 POST   /api/vehicles
@@ -161,80 +166,115 @@ GET    /api/vehicles/:id/history
 
 GET    /api/mechanics
 
-GET    /api/jobs
-POST   /api/jobs
-GET    /api/jobs/:id
-PATCH  /api/jobs/:id/status
-PATCH  /api/jobs/:id/assignment
-POST   /api/jobs/:id/notes
-
-POST   /api/jobs/:id/labour-items
-PATCH  /api/jobs/:id/labour-items/:itemId
-DELETE /api/jobs/:id/labour-items/:itemId
-
-POST   /api/jobs/:id/part-items
-PATCH  /api/jobs/:id/part-items/:itemId
-DELETE /api/jobs/:id/part-items/:itemId
-
-GET    /api/jobs/:id/customer-summary
+GET    /api/workshop-jobs
+POST   /api/workshop-jobs
+GET    /api/workshop-jobs/:id
+PATCH  /api/workshop-jobs/:id/status
+PATCH  /api/workshop-jobs/:id/callback
+POST   /api/workshop-jobs/:id/notes
+GET    /api/callbacks/due
 ```
+
+Deferred from the previous broader plan:
+
+- Labour line APIs
+- Part line APIs
+- Calculated job total APIs
+- Customer handover summary API
+- Invoice/payment/accounting APIs
 
 ## Data Model Plan
 
-Use TypeORM in the first version.
+Use TypeORM in the first persistence version.
 
 Core entities:
 
 - Customer
 - Vehicle
 - Mechanic
-- Job
-- JobNote
-- LabourItem
-- PartItem
+- WorkshopJob
+- VisitNote
+- CallbackReminder
+- WorkshopAuditEvent
 
 Important rules:
 
-- Vehicle registration is normalized and unique.
-- Job has one customer and one vehicle.
-- Job can have one assigned mechanic.
-- Job should support scheduled start and scheduled end, or scheduled start and expected duration, for the workshop timeline.
-- Job status drives timeline badges and workflow state.
-- Labour and part line totals are calculated by the backend.
-- Job total is calculated from labour and parts.
-- Customer handover summary is not an invoice.
+- Vehicle registration is normalised and unique.
+- Customer phone number is required for callback-focused flows.
+- WorkshopJob has one customer and one vehicle.
+- WorkshopJob can have one assigned mechanic.
+- WorkshopJob should support scheduled start and scheduled end, or scheduled start and expected duration, for the timeline.
+- WorkshopJob status is a simple controlled workflow.
+- Callback overdue state is calculated from callback due date/time and callback status.
+- Audit events record important status and callback changes.
+- Labour and part pricing are not MVP concerns.
 
 ## Test Strategy
 
+Backend unit tests:
+
+- Registration normalisation
+- Scheduled time range validation
+- Simple status transition rules
+- Callback due/overdue calculation
+- Callback status rules
+
 Backend API tests:
 
-- Registration search normalization
+- Customer creation validation
+- Vehicle creation validation
+- Registration search normalisation
+- Customer search
 - Workshop timeline by date
-- Customer and vehicle creation validation
-- Vehicle history
-- Job creation
-- Mechanic assignment
-- Job status update
-- Mechanic notes
-- Parts/labour totals
-- Customer summary endpoint
+- Workshop job creation
+- Workshop job status update
+- Callback update
+- Due/overdue callback listing
+- Visit notes
+- Vehicle/customer visit history
 
 Frontend tests:
 
 - Route rendering
-- Timeline block rendering
+- Timeline/list rendering
 - Status badge rendering
-- Money formatting
-- Registration search form behavior
+- Callback due/overdue state rendering
+- Registration search form behaviour
+- Customer search form behaviour
 
 Playwright E2E tests:
 
 - Workshop timeline loads seeded active jobs
-- Registration search opens vehicle history
-- Job detail shows workflow state
-- Mechanic note can be added
-- Parts and labour totals are visible
-- Print summary page renders customer-facing handover content
+- Registration search opens vehicle visit history
+- Customer search opens customer history
+- Workshop job detail shows notes and callback state
+- Callback can be marked as done
+- Overdue callback is highlighted
+
+## Security Direction
+
+Keep the secure-by-design direction from ADR 0001:
+
+- Validate input at API boundaries
+- Normalise vehicle registration before search and persistence
+- Use safe errors without leaking stack traces
+- Do not log sensitive customer, vehicle or note data
+- Plan requestId/correlation ID support
+- Keep secrets in environment variables
+- Audit important workflow changes
+
+## Observability Direction
+
+Keep observability lightweight but intentional:
+
+- Health endpoint
+- Structured logs
+- RequestId/correlation ID
+- API request duration/status metrics
+- Callback overdue count metric later
+- Jobs by status metric later
+- Audit events for status/callback changes
+- Local development should work without a full observability stack
 
 ## Milestone Plan
 
@@ -242,15 +282,17 @@ Playwright E2E tests:
 2. `chore: replace boilerplate branding with GarageFlow`
 3. `chore: simplify unused backend boilerplate surface`
 4. `chore: simplify unused frontend starter surface`
-5. `feat: add garage domain entities and migrations`
-6. `feat: add seed data`
-7. `feat: add customer and vehicle APIs`
-8. `feat: add registration search and vehicle history`
-9. `feat: add job workflow APIs`
-10. `feat: add notes parts labour and totals`
-11. `feat: build workshop timeline and registration search UI`
-12. `feat: build job detail workflow UI`
-13. `feat: add printable customer handover summary`
-14. `test: add backend API workflow tests`
-15. `test: add Playwright recruiter-visible flows`
-16. `docs: polish portfolio README`
+5. `feat: build static workshop timeline prototype`
+6. `docs: add product and architecture decision records`
+7. `feat: add garage domain shared types and helpers`
+8. `docs: simplify GarageFlow product scope`
+9. `feat: add customer vehicle and mechanic entities`
+10. `feat: add lightweight workshop job entity`
+11. `feat: add callback reminder domain logic`
+12. `feat: add seed data for workshop follow-up flow`
+13. `feat: add workshop timeline API`
+14. `feat: add registration and customer search APIs`
+15. `feat: add workshop job status and callback APIs`
+16. `test: add backend workflow API coverage`
+17. `test: add Playwright recruiter-visible flows`
+18. `docs: polish portfolio README`

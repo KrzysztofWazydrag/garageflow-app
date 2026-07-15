@@ -2,13 +2,38 @@
 
 ## Product Statement
 
-GarageFlow App is a small full-stack garage workflow application for independent garages and repair shops. It helps teams replace paper notebooks, scribbled job cards and memory-based tracking with a clean digital workflow for customers, vehicles, jobs, mechanic notes, costs and customer handover summaries.
+GarageFlow App is a simple workshop follow-up tracker for independent garages and repair shops.
+
+It helps small garages keep customer details, vehicle registrations, visit notes and promised callbacks in one simple workflow.
+
+## Real-World Observation
+
+A small garage visit showed that the garage already has software for invoices, payments, parts purchases and costing. GarageFlow should not duplicate that system.
+
+The unresolved workflow problem is smaller and more practical:
+
+- customer details are repeatedly asked for on repeat visits
+- vehicle registrations are repeatedly written down
+- phone numbers are stored in a messy handwritten notebook
+- visit context and previous notes are hard to find
+- promised callbacks can be missed
+
+GarageFlow focuses on that gap: customer, vehicle, workshop job notes and callback follow-up.
 
 ## Problem Statement
 
-Many small garages still manage work through paper job notes. That makes it hard to find returning vehicles, track job status, preserve mechanic notes, calculate parts and labour totals, and produce a clear customer-facing summary when the vehicle is collected.
+Many small garages still use paper notes for day-to-day workshop follow-up. That makes it hard to answer basic operational questions:
 
-GarageFlow App focuses on the practical daily workflow. It is not a full garage ERP, accounting system or invoicing product.
+- Who is the customer?
+- What car is it?
+- Why is it here?
+- What did we promise?
+- When should we call back?
+- Has the customer been contacted?
+- What is the current simple job status?
+- What notes did we write last time?
+
+GarageFlow is not a full garage ERP, accounting system, invoicing system or parts/labour costing product.
 
 ## Target Users
 
@@ -18,108 +43,123 @@ GarageFlow App focuses on the practical daily workflow. It is not a full garage 
 
 ## Core Workflow
 
-1. Customer contacts the garage.
-2. User creates or finds the customer.
-3. User creates or finds the vehicle using registration number.
-4. User creates a job or booking.
-5. User assigns the job to a mechanic.
-6. Job appears on the workshop timeline for the scheduled day.
-7. Job moves through the workshop status workflow.
-8. Mechanic adds internal notes.
-9. User adds labour items.
-10. User adds parts items.
-11. App calculates labour subtotal, parts subtotal and job total.
-12. Returning vehicles can be found by registration number with job history.
-13. User prints a simple customer job summary / handover sheet.
+1. Customer contacts or visits the garage.
+2. User creates or finds the customer by name or phone number.
+3. User creates or finds the vehicle by registration number.
+4. User creates a lightweight workshop job with the reason for visit.
+5. User assigns or reviews the simple job status.
+6. Job appears on the daily workshop list or timeline.
+7. User records notes during the visit.
+8. User records whether a customer callback is required.
+9. App highlights due and overdue callbacks.
+10. Returning vehicles can be found by registration number with visit history.
 
 ## Main Interface Direction
 
-GarageFlow App should use a workshop timeline as the main interface, not a plain table or simple Kanban board.
+GarageFlow should stay timeline/list-first rather than table-first or Kanban-first.
 
-The timeline should be a desktop-first garage/workshop view inspired by scheduling and Gantt-style products:
+The main screen should help the garage quickly see the day:
 
-- Mechanics as rows
-- Time of day as the horizontal axis
-- Jobs and bookings as blocks on the timeline
-- Status badges or colours for the workshop status workflow
-- Quick vehicle registration search above the timeline
-- Clicking a job opens the job detail workflow
-- Jobs can later be moved through workflow statuses
-- Practical, dark, industrial UI style
+- mechanics or work lanes as rows where useful
+- time of day as the horizontal axis where useful
+- jobs and bookings as simple blocks or rows
+- status badges for simple workshop state
+- callback due/overdue highlighting
+- quick vehicle registration search
+- customer search
+- practical, dark, industrial UI style
 
-The main screen should help the garage owner or service advisor quickly understand who is working on what, when vehicles are booked in, what is waiting for parts, and what is ready for collection.
+The interface should remain small and focused on follow-up, not billing.
 
 ## MVP Scope
 
-- Workshop timeline with today's bookings and active jobs
-- Quick vehicle registration search
-- Customer records
-- Vehicle records
-- Job and booking records
-- Mechanic records and assignment
-- Job status workflow
-- Mechanic notes
-- Labour items
-- Parts items
-- Automatic cost totals
-- Vehicle and job history
-- Printable customer handover summary
+- Customer records with full name and phone number
+- Vehicle records with registration display and normalised registration
+- Optional vehicle make/model
+- Lightweight workshop jobs
+- Reason for visit
+- Simple job status workflow
+- Visit notes
+- Callback required flag
+- Promised callback date/time
+- Callback status
+- Last contacted timestamp
+- Daily workshop list or timeline
+- Registration search
+- Customer search
+- Visit history by registration/customer
+- Callback reminders
+- Overdue callback highlighting
+- Audit events for status/callback changes
 - Seed data
 - Backend API tests
 - Playwright E2E tests
 
 ## Out Of Scope
 
+- Invoices
 - Payments
-- Full invoices
 - VAT/accounting rules
+- Parts/labour costing
+- Labour line pricing
+- Part line pricing
+- Parts inventory
+- Supplier orders
 - Payroll
-- Full CRM
-- MOT/insurance integrations
-- SMS/email sending
+- MOT/DVLA integrations
+- Customer portal
 - AI features
-- Complex inventory management
+- Full ERP
 - Multi-tenant SaaS
 - Microservices
 
-## Status Workflow
+## Simplified Status Workflow
 
 - Booked
-- Checked in
-- Diagnosing
+- In workshop
+- Waiting for customer
 - Waiting for parts
-- In progress
 - Ready for collection
 - Completed
+- Cancelled
 
-## Cost Model
+Detailed states such as Diagnosing and In progress are deferred unless real workflow testing proves they are needed.
 
-Labour item:
+## Callback Workflow
 
-- Description
-- Hours or quantity
-- Rate or fixed price
-- Line total
+Callback data:
 
-Part item:
+- callback required
+- callback due at
+- callback status
+- last contacted at
 
-- Part name
-- Quantity
-- Unit cost
-- Line total
+Callback statuses:
 
-Job totals:
+- Not required
+- Required
+- Done
 
-- Labour subtotal
-- Parts subtotal
-- Job total
+Overdue should be calculated from callback due date/time and callback status rather than stored as a separate source of truth.
 
-## Printable Customer Summary
+## Testing Showcase Direction
 
-The printable document is a customer job summary / handover sheet, not an invoice. It should be white, simple and printer-friendly, with customer details, vehicle details, job number, work requested, work completed, line items and total cost.
+The simplified scope is intentionally good for demonstrating engineering quality:
+
+- Unit tests for domain helpers
+- API integration tests
+- Validation tests
+- Status transition tests
+- Callback due/overdue logic tests
+- Registration and customer search tests
+- Playwright end-to-end tests
+- Accessibility checks
+- Error handling tests
+- Security boundary tests
+- Observability/logging expectations
 
 ## Portfolio Positioning
 
 GarageFlow App should be understandable to a recruiter in under two minutes:
 
-> A practical full-stack workflow app that digitises a paper-based garage process with a workshop timeline, vehicle history, job workflow and printable handover summaries.
+> A practical full-stack workflow app that digitises a small garage's paper notebook with customer/vehicle lookup, lightweight workshop jobs, visit notes and promised callback tracking.
